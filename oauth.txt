@@ -1,0 +1,172 @@
+✅ Basic OAuth Questions
+
+What is OAuth?
+OAuth (Open Authorization) is an open standard and authorization framework that allows third-party applications or websites to access 
+a user's resources on another service without requiring the user to share their login credentials (such as passwords) with those third parties. 
+Instead, OAuth uses secure, temporary access tokens that grant limited permissions to the requesting application.
+
+For example, when you use your Google or Facebook account to log into another website or app, OAuth is the protocol that enables this 
+secure, delegated access without exposing your actual password
+
+Why is OAuth Used?
+OAuth is widely used because it provides several important benefits:
+
+1. Enhanced Security
+Users never have to share their passwords with third-party applications, reducing the risk of credential theft or misuse.
+
+Access tokens can be limited in scope and duration, and can be revoked at any time, further minimizing security risks.
+
+2. Improved User Experience
+Users can easily log in or grant access to their data using existing accounts from trusted providers (like Google, Facebook, Microsoft), 
+eliminating the need to create new accounts and remember additional passwords.
+
+OAuth streamlines permissions, making it clear what data or actions a third-party app is requesting access to.
+
+3. Delegated and Granular Access
+OAuth allows users to grant specific permissions (such as reading contacts or posting on their behalf) without giving full access to 
+their accounts.
+
+Applications can request only the access they need, and users can control or revoke these permissions at any time.
+
+4. Scalability and Flexibility
+OAuth is designed to work across different platforms and services, supporting a wide range of use cases from single sign-on (SSO) 
+to API integrations.
+
+Common Use Cases
+Single Sign-On (SSO): Log in to a new app using your existing Google, Facebook, or Twitter account.
+
+API Access: Allow a photo printing app to access your Google Photos without sharing your Google password.
+
+Delegated Actions: Permit a scheduling app to add events to your calendar on your behalf
+
+In summary:
+OAuth is a secure authorization framework that enables applications to access user data on other services without exposing passwords, 
+improving both security and user experience while providing granular and revocable access control
+
+2. What is the difference between authentication and authorization?
+    Authentication and Authorization are two distinct but complementary processes in security:
+    a.Authentication is the process of verifying who a user or entity is. It answers the question: “Are you really who you claim to be?” 
+        This typically involves validating credentials such as usernames and passwords, biometrics, or multi-factor authentication.
+        Example: Logging into your email by entering your username and password.
+    
+    b. Authorization determines what an authenticated user is allowed to do or access. It answers the question: “What resources or actions 
+        are you permitted to access?” Authorization enforces permissions, roles, or policies to control access to data or functionalities.
+        Example: After logging in, a user may be authorized to read emails but not to change account settings.
+
+Summary
+Authentication confirms your identity.
+
+Authorization controls your access based on that identity.
+
+Without authentication, authorization cannot occur, because the system must first know who you are before deciding what you can do.
+
+How does OAuth work in simple terms?
+
+In simple terms, OAuth works as a secure way for a user to grant a third-party application limited access to their data on another 
+service without sharing their password.
+
+Here’s a straightforward step-by-step explanation of the most common OAuth flow (Authorization Code Flow):
+
+User wants to use an app (the client) that needs access to their data on another service (resource server), like Google Photos.
+
+The app redirects the user to the service’s authorization server (e.g., Google’s login page), asking for permission to access specific data.
+
+User logs in and consents to the app’s access request, seeing exactly what the app wants to do (e.g., “Allow this app to view your photos”).
+
+Authorization server sends back an authorization code to the app (via a redirect URL).
+
+The app exchanges this code (along with its own credentials) with the authorization server for an access token.
+
+The app uses the access token to request the user’s data from the resource server.
+
+The resource server validates the token and returns the requested data to the app.
+
+This way, the app never sees the user’s password, and the user controls what data the app can access and for how long.
+
+Summary:
+OAuth lets users authorize apps to access their data without sharing passwords.
+
+It uses temporary tokens instead of credentials.
+
+The user explicitly consents to what the app can do.
+
+Access tokens are used to securely request data from the service.
+
+This process is secure, user-friendly, and widely used for login (SSO) and API access scenarios.
+
+4. What are the main components in the OAuth 2.0 framework? (e.g., Resource Owner, Client, Authorization Server, Resource Server)
+
+    The main components in the OAuth 2.0 framework are:
+
+    1.Resource Owner
+    The entity (usually the user) who owns the protected data or resources and can grant permission to a third-party application to access 
+    those resources on their behalf.
+
+    2.Client
+    The application (web, mobile, or desktop) that requests access to the resource owner’s protected resources. It acts on behalf of the 
+    resource owner after obtaining authorization.
+
+    3.Authorization Server
+    The server responsible for authenticating the resource owner, obtaining their consent, and issuing access tokens to the client. 
+    It manages the authorization process and grants tokens that the client uses to access resources.
+
+    4.Resource Server
+    The server hosting the protected resources (APIs or data). It accepts and validates access tokens issued by the authorization server 
+    and serves the requested resources to the client if authorized
+
+    5.User Agent (optional but common)
+    The interface (usually a web browser) through which the resource owner interacts with the client and authorization server during 
+    the authorization process
+
+5. What is an access token? What is it used for?
+   An access token is a secure, time-limited credential issued by an OAuth 2.0 authorization server that represents the client application's 
+   authorization to access specific protected resources on behalf of a user (the resource owner).
+
+    `What is an Access Token?
+    It is typically a string (often a JSON Web Token - JWT) that encodes information such as the client’s identity, user permissions (scopes), expiration time, and other claims.
+
+    OAuth 2.0 does not mandate a specific format, but JWTs are common because they can carry self-contained data and are cryptographically signed.
+
+    The token is passed by the client in API requests (usually in the HTTP Authorization header) to the resource server to authenticate and authorize access`
+
+    What is it Used For?
+    Granting Access: It allows the client application to access protected APIs or resources on behalf of the user without sharing the user’s 
+    password.
+
+    Security: Access tokens reduce the risk of credential exposure by replacing passwords with short-lived tokens that can be scoped and 
+    revoked.
+
+    Controlled Permissions: Tokens carry scopes that limit what the client can do or which resources it can access, enforcing least 
+    privilege.
+
+    Session Management: Access tokens are typically short-lived to minimize security risks; refresh tokens may be used to obtain new 
+    access tokens without re-authentication.
+
+
+6. What is a refresh token? Why is it important?
+    A refresh token is a special kind of token issued by an OAuth 2.0 authorization server that allows a client 
+    application to obtain a new access token without requiring the user to re-authenticate.
+
+    Why is a Refresh Token Important?
+    Extends User Sessions Without Re-Login: Access tokens typically have short lifespans for security reasons. When they expire, 
+    the refresh token lets the client get a new access token silently, so users don’t have to log in repeatedly, improving user experience.
+
+    Enhances Security: By keeping access tokens short-lived, the risk of misuse if stolen is minimized. The refresh token, which is 
+    longer-lived, is securely stored and used only to request new access tokens.
+
+    Reduces User Interruptions: Users are not frequently prompted for credentials or consent, making interactions seamless while 
+    maintaining secure access.
+
+    Supports Token Rotation and Revocation: Refresh tokens can be revoked or rotated to limit exposure if compromised, giving better 
+    control over session management.
+
+    How It Works (Simplified Flow)
+    After the user authenticates, the authorization server issues both an access token and a refresh token to the client.
+
+    The client uses the access token to access protected resources.
+
+    When the access token expires, the client sends the refresh token to the authorization server to request a new access token.
+
+    The authorization server validates the refresh token and issues a new access token (and sometimes a new refresh token).
+
+    This process repeats without bothering the user until the refresh token expires or is revoked.

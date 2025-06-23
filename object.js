@@ -37,6 +37,7 @@ obj3.age = 10;
 
 
 
+
 // 4. Using a Constructor Function (allow you to create multiple instances of similar objects.)
 // What is a Constructor Function?
 // A constructor function is a regular function invoked with the new keyword.

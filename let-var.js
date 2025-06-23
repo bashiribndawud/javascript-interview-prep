@@ -26,9 +26,11 @@ console.log(y); // Error: y is not defined
 
 console.log(a); // Output: undefined (var is hoisted)
 var a = 5;
+var a = 5;
 
 console.log(b); // Error: Cannot access 'b' before initialization
 let b = 10;
+
 
 // 3. Re-declaration
 //var: Allows the same variable to be re-declared within the same scope without any error.
