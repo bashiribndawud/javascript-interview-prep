@@ -4,22 +4,23 @@
 //Memoization is a technique used to optimize expensive function calls by caching the results of previous function calls.
 
 //Example of memoization
-function memoizeAddTo80() {
+function memoizedAddTo80() {
     let cache = {};
+  
     return function(n) {
-        if (n in cache) {
-            console.log("Fetching from cache");
-            return cache[n];
-        } else {
-            console.log("Calculating result");
-            cache[n] = n + 80;
-            return cache[n];
-        }
+      if (n in cache) {
+        console.log('Fetch from cache');
+        return cache[n];
+      } else {
+        console.log('Cal result');
+        cache[n] = n + 80;
+        return cache[n];
+      }
     };
-}
+  }
 
 
-// const memoized = memoizeAddTo80();
+const memoized = memoizeAddTo80();
 console.log(memoized(5)); // Output: Calculating result 85
 console.log(memoized(5)); // Output: Fetching from cache 85
 console.log(memoized(6)); // Output: Calculating result 86

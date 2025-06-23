@@ -56,4 +56,5 @@ let greeting2 = function(a, b){
     return `${a} ${this.name} ${b}`
 }
 
-let bound = greeting2.bind(obj2);
+let bound = greeting2.bind(obj2, "Hello", "How are you");
+bound()

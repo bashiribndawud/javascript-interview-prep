@@ -1,0 +1,302 @@
+✅ Basic Database Concepts
+1.What is a database?
+A database is an organized collection of structured information or data, typically stored electronically in a computer system and managed by a database management system (DBMS). 
+It stores data in tables made up of rows (records) and columns (fields), enabling efficient access, management, modification, and querying of data, often using Structured Query Language (SQL)
+
+2.What is the difference between SQL and NoSQL databases?
+The difference between SQL and NoSQL databases centers on their data models, schema flexibility, scalability, and transaction support:
+
+a. Data Model and Structure
+    i.SQL databases are relational and store data in tables with rows and columns, enforcing a predefined, fixed schema. 
+    This structure supports complex multi-row transactions and relationships between tables.
+
+    ii.NoSQL databases are non-relational and use various data models such as document, key-value, graph, or wide-column stores. 
+    They have a dynamic or flexible schema, allowing storage of unstructured or semi-structured data like JSON documents
+
+b. Schema Flexibility
+    i.SQL databases require a strict schema defined before data insertion, ensuring data consistency and integrity.
+
+    ii.NoSQL databases allow dynamic schemas, meaning the structure of the data can evolve over time without requiring 
+    a predefined schema, which is useful for rapidly changing or diverse data
+
+c. Scalability
+    i.SQL databases typically scale vertically by increasing the resources (CPU, RAM) of a single server.
+
+    ii.NoSQL databases scale horizontally by distributing data across multiple servers or nodes, 
+    which is more cost-effective and suitable for handling large volumes of fast-changing data
+
+d. Transactions and Consistency
+    i.SQL databases support ACID (Atomicity, Consistency, Isolation, Durability) transactions, ensuring reliable multi-step operations 
+    across multiple tables.
+
+    ii.NoSQL databases often sacrifice some ACID properties for performance and scalability, following the CAP theorem 
+    (Consistency, Availability, Partition tolerance). They usually support atomic operations at the document or single-record level but lack full multi-document transaction support or require manual handling
+
+e. Use Cases
+    i.SQL is preferred for applications requiring complex queries, multi-row transactions, and strong consistency, such as banking, accounting, and legacy systems.
+
+    ii.NoSQL fits applications with large-scale, unstructured, or rapidly evolving data needs, like IoT, social networks, user analytics, and real-time personalization
+
+3. What are tables, rows, and columns in a relational database?
+    a.Tables are collections of related data organized in a grid of rows and columns, similar to a spreadsheet. 
+    Each table typically represents an entity or object type, such as customers, orders, or products
+
+    b.Rows (also called records or tuples) are individual entries in a table. Each row contains a set of values, one for each column, 
+    representing a single instance of the entity. For example, a row in a "Customers" table might represent one customer with all their details
+
+    c.Columns (also called fields or attributes) define the properties or characteristics of the entity stored in the table. 
+    Each column has a unique name and a data type (e.g., integer, text, date) that specifies the kind of data it holds. For example, columns in a "Customers" table might be Name, Address, and Phone Number
+
+Summary:
+Table: A structured set of data about one type of entity.
+
+Row: A single record representing one instance of that entity.
+
+Column: A named attribute describing a property of the entity, with a defined data type.
+
+4. What is a primary key and a foreign key?
+    a. A primary key is a column or set of columns in a database table that uniquely identifies each row in that table. 
+    It must contain unique values and cannot have nulls, ensuring every record is distinct and easily retrievable within the table
+
+    b.A foreign key is a column or set of columns in one table that refers to the primary key in another table. 
+    It creates a link between the two tables, enforcing referential integrity by ensuring that the foreign key values correspond to 
+    existing primary key values in the referenced table. Unlike primary keys, foreign keys can have duplicate values and can accept 
+    nulls if the relationship is optional
+
+    Example:
+    In a library database, the Books table might have BookID as its primary key. The Loans table would have a BookID foreign 
+    key that references the Books table’s primary key, ensuring that every loan record corresponds to a valid book.
+    This system maintains data integrity and allows relational databases to efficiently manage interconnected data.
+    
+    Aspect	                Primary Key	                                        Foreign Key
+    Purpose	                Uniquely identifies each record in its own table	Links records between two tables
+    Uniqueness	            Must be unique	                                    Can have duplicate values
+    Null values	            Not allowed	                                        Allowed (depending on relationship)
+    Location	            Defined in the table it uniquely identifies	        Defined in a different table referencing a primary key
+    Relationship	        Defines the "parent" table	                        Defines the "child" table
+    Referential Integrity	Ensures uniqueness within the table             	Enforces consistency between related tables
+
+5. What are CRUD operations? Can you explain each one?
+    CRUD operations are the four fundamental actions used to manage data in persistent storage systems like databases. CRUD stands for Create, Read, Update, and Delete. 
+    These operations are essential for any application that stores and manipulates data
+
+    a.Create: This operation adds new data or records to the database. For example, when a new user registers on a website, 
+      their information is "created" as a new record in the user table. In SQL, this is typically done with the INSERT statement
+    
+    b. Read: The read operation retrieves or views data from the database without modifying it. This could involve searching, listing, 
+       or displaying existing records. In SQL, the SELECT statement is used to read data
+    
+    c. Update: Update modifies existing data or records in the database. For example, if a user changes their email address, 
+       the corresponding record is updated with the new value. In SQL, this is performed with the UPDATE statement
+    
+    d. Delete: This operation removes data or records from the database. For instance, if a user deletes their account, 
+       the corresponding record is deleted. In SQL, the DELETE statement is used
+
+    CRUD operations are the building blocks of data management in applications, ensuring data can be added, accessed, changed, and removed as needed
+
+
+🧩 SQL Querying & Operations
+1. Write a SQL query to fetch all users who registered in the last 30 days.
+    SELECT * | user_name, name //waiting specific columns 
+    FROM users
+    WHERE created_at >= NOW() - INTERVAL 30 DAY;
+
+2.  How do you insert a new record into a table?
+    INSERT INTO table_name (column1, column2, column3, ...)
+    VALUES (value1, value2, value3, ...);
+    
+    INSERT INTO users (id, name, email)
+    VALUES (1, 'Alice Smith', 'alice@example.com');
+
+3. What does the JOIN clause do? Name and explain different types of joins.
+    A JOIN clause in SQL is used to combine rows from two or more tables based on a related column between them, 
+    allowing you to retrieve related data stored across multiple tables in a single query result
+
+    Different Types of SQL JOINs
+    a. INNER JOIN
+        Returns only the rows that have matching values in both tables. If there is no match, the row is excluded from the result.
+        Example: Retrieve orders with their corresponding customers where the customer_id matches.
+        SELECT *
+        FROM orders
+        INNER JOIN customers ON orders.customer_id = customer.id
+
+    b.  LEFT JOIN (or LEFT OUTER JOIN)
+        Returns all rows from the left table and the matching rows from the right table. If there is no match, columns from the right table will contain NULL.
+        Use case: Get all employees and their departments, including employees without a department.
+    
+    c. RIGHT JOIN (or RIGHT OUTER JOIN)
+        Returns all rows from the right table and the matching rows from the left table. If there is no match, columns from the left table will contain NULL.
+        Use case: Get all departments and their employees, including departments without employees.
+
+    d. FULL JOIN (or FULL OUTER JOIN)
+        Returns all rows when there is a match in one of the tables. Rows without a match in either table will have NULL in the columns of the other table.
+        Use case: Combine all records from two tables, showing matches and unmatched rows
+
+    e. CROSS JOIN
+        Returns the Cartesian product of the two tables, i.e., every possible combination of rows from both tables. It does not require a matching column.
+        Use case: Generate combinations of all products and all stores.
+
+        Why Use JOINs?
+        To retrieve related data distributed across normalized tables
+
+        To establish relationships between tables using keys
+
+        To combine and analyze data from multiple sources efficiently
+
+        To maintain data integrity while avoiding redundancy
+
+4. What is the difference between WHERE and HAVING
+    The WHERE and HAVING clauses in SQL both filter data but differ in when and how they apply the filtering:
+
+    Explanation
+    WHERE filters rows before any grouping or aggregation happens. It works on raw data and cannot include aggregate functions.
+
+    HAVING filters the results after rows have been grouped and aggregated, typically used with GROUP BY to filter groups based on 
+    aggregate values.
+
+    Using WHERE:
+    -- Get employees with salary greater than 50000
+    SELECT * 
+    FROM employees
+    WHERE salary > 50000;
+
+    Using HAVING:
+    -- Get departments where average salary is greater than 50000
+    SELECT department, AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY department
+    HAVING AVG(salary) > 50000;
+
+5. What is a subquery and when would you use one?
+    A subquery (also called a nested or inner query) is a SQL query embedded inside another SQL query. It is enclosed in 
+    parentheses and executed first, with its result used by the outer query for further filtering, comparison, or calculation
+
+    When to Use a Subquery
+    To break complex queries into simpler, manageable parts.
+
+    To filter results based on aggregated or computed values.
+
+    To perform operations that require multiple steps, such as finding records related to results from another query.
+
+    To dynamically compute values used in the outer query.
+
+    To replace or complement joins in some scenarios (though joins are often more efficient).
+
+    Examples
+    1. Subquery in WHERE clause
+    Find customers who have placed orders:
+    SELECT customer_id, first_name
+    FROM Customers
+    WHERE customer_id IN (
+    SELECT customer_id
+    FROM Orders
+    );
+
+
+🔄 Data Manipulation & Transactions
+1. What is a database transaction? Why is it important?
+    A database transaction is a logical unit of work consisting of one or more operations (such as insert, update, delete) executed 
+    as a single, indivisible sequence within a database management system (DBMS)
+
+    Example
+    In a banking system, transferring money from one account to another involves two operations: deducting from one account and adding 
+    to another. A transaction ensures both happen together; if either fails, the entire transfer is rolled back, preserving data integrity
+
+    In summary:
+    A database transaction is essential for ensuring reliable, consistent, and secure data operations, especially in multi-user environments 
+    where concurrent access and system failures are common.
+
+2. What do the ACID properties stand for?
+    The ACID properties in a database transaction stand for:
+
+    a.Atomicity: Ensures that a transaction is treated as a single, indivisible unit of work. Either all operations within the transaction 
+    complete successfully, or none do. If any part fails, the entire transaction is rolled back, preventing partial updates and keeping 
+    the database consistent.
+
+    b.Consistency: Guarantees that a transaction brings the database from one valid state to another, adhering to all predefined rules, 
+    constraints, and data integrity checks. This prevents corruption or invalid data from entering the system.
+
+    c.Isolation: Ensures that concurrent transactions do not interfere with each other. Each transaction operates as if it were the only one 
+    running, so intermediate states are not visible to others, preventing conflicts and ensuring correctness in multi-user environments.
+
+    d.Durability: Once a transaction is committed, its changes are permanently saved to the database, surviving system crashes or failures. 
+    This is typically achieved through mechanisms like write-ahead logging or persistent storage.
+
+    Together, these properties ensure that database transactions are reliable, consistent, and safe even in the presence of errors, 
+    crashes, or concurrent access
+
+3. How do you ensure data integrity in a database?
+    To ensure data integrity in a database, organizations implement a combination of technical controls, best practices, and policies that 
+    maintain the accuracy, consistency, and reliability of data throughout its lifecycle. Key approaches include:
+
+    1. Data Validation and Verification
+        Enforce data validation rules at the point of entry to ensure data conforms to expected formats, types, and ranges 
+        (e.g., using database constraints, application-level checks).
+
+        Verify data accuracy by cross-referencing with trusted sources or using checksums to detect corruption.
+
+    2. Use of Database Constraints
+        Define primary keys to uniquely identify records and prevent duplicates.
+
+        Use foreign key constraints to maintain referential integrity between related tables.
+
+        Apply check constraints to enforce domain-specific rules on data values.
+    
+    3. Access Control and Authentication
+        Restrict data access to authorized users through role-based access control (RBAC) and strong authentication mechanisms, 
+        limiting the risk of unauthorized data modification.
+
+    4. Data Encryption
+        Encrypt sensitive data both at rest and in transit to protect against unauthorized access or tampering.
+
+    5. Regular Backups and Recovery Plans
+        Perform frequent backups to enable restoration of data in case of corruption, loss, or disaster.
+
+        Maintain and test recovery plans to ensure data can be restored to a consistent state quickly.
+    
+    6. Audit Trails and Logging
+        Implement detailed logging of data changes and access events to monitor for unauthorized or erroneous modifications and 
+        support forensic analysis.
+    
+    7. Data Quality Checks and Cleansing
+        Regularly audit data for errors, inconsistencies, duplicates, and completeness.
+
+        Cleanse and transform data to maintain uniform formats and remove inaccuracies.
+
+    8. Data Governance and Policies
+        Establish clear policies defining data ownership, quality standards, and management procedures to ensure consistent handling of
+        data across the organization.
+
+5. What is the difference between DELETE, TRUNCATE, and DROP
+   Summary:
+
+    Use DELETE to remove specific records with conditions and when you need transactional control.
+
+    Use TRUNCATE to quickly remove all data but keep the table structure intact.
+
+    Use DROP to permanently delete the entire table and its data.
+
+    -- Delete specific rows
+        DELETE FROM employees WHERE department = 'Finance';
+
+        -- Remove all rows but keep table
+        TRUNCATE TABLE employees;
+
+        -- Remove entire table and its data
+        DROP TABLE employees;
+
+    Additional Details:
+        DELETE is a DML (Data Manipulation Language) command; it deletes rows one by one and supports conditions via WHERE. 
+        It can be rolled back if used inside a transaction.
+
+        TRUNCATE is a DDL (Data Definition Language) command; it removes all rows by deallocating data pages, making it faster 
+        than DELETE. It does not log individual row deletions and generally cannot be rolled back.
+
+        DROP is a DDL command that removes the entire table including its structure, indexes, constraints, and permissions. 
+        Once dropped, the table cannot be recovered unless restored from backup.
+
+
+
+
+
+
