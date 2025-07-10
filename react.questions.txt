@@ -1,0 +1,326 @@
+React.js (or just React) is an open-source JavaScript library used for building user interfaces, especially for single-page applications 
+(SPAs). It was developed by Facebook (now Meta) and is maintained by Facebook along with a large community of developers.
+
+Key Concepts of React:
+1. Component-Based Architecture
+    UI is broken down into reusable components (e.g., Header, Button, Card), each managing its own logic and rendering.
+2. JSX (JavaScript XML)
+    A syntax extension that allows you to write HTML-like code inside JavaScript.
+3. Virtual DOM
+    React uses a lightweight copy of the actual DOM to detect changes and update only the parts of the UI that have changed, 
+    making it very efficient.
+4. One-Way Data Binding
+   Data flows in a single direction (from parent to child), making the app easier to debug and reason about.
+6. Hooks (introduced in React 16.8)
+    Allow functional components to use state and lifecycle features (like useState, useEffect, etc.)
+
+✅ Controlled vs Uncontrolled Components in React
+
+🔹 Controlled Component
+A controlled component is a form element (like <input>, <textarea>, <select>) whose value is controlled by React state.
+
+✅ Characteristics:
+The component’s value is bound to state.
+
+Updates are handled via an onChange handler.
+
+You have full control over the input value.
+📦 Example:
+import { useState } from 'react';
+
+function ControlledInput() {
+  const [name, setName] = useState("");
+
+  return (
+    <input
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+    />
+  );
+}
+
+✅ Benefits:
+Easy to validate.
+
+Predictable behavior.
+
+Great for complex forms.
+
+🔹 Uncontrolled Component
+An uncontrolled component is a form element that manages its own state internally, just like in plain HTML.
+
+✅ Characteristics:
+React does not manage the value directly.
+
+You use a ref to access the value when needed.
+
+Good for quick, simple forms.
+
+📦 Example:
+import { useRef } from 'react';
+
+function UncontrolledInput() {
+  const inputRef = useRef();
+
+  const handleSubmit = () => {
+    alert(inputRef.current.value);
+  };
+
+  return (
+    <>
+      <input ref={inputRef} />
+      <button onClick={handleSubmit}>Submit</button>
+    </>
+  );
+}
+
+🔧 Common Use Case:
+Use controlled components when:
+    You need to validate or format data as the user types.
+    You need dynamic form rendering.
+Use uncontrolled components when:
+    You just need to grab the final input value (e.g., file inputs or search bars).
+
+
+🔹 What Are Hooks in ReactJS?
+Hooks are functions that let you "hook into" React's features like state, lifecycle, and context inside functional components.
+They were introduced in React 16.8 to allow function components to do things that previously only class components could.
+✅ Why Hooks?
+Before Hooks:
+    Only class components could use features like state and lifecycle methods.
+    Code was harder to share across components (had to use HOCs or render props).
+With Hooks:
+    You can use stateful logic inside functional components.
+    They promote cleaner, reusable, and more readable code.
+
+🧩 Commonly Used Hooks
+| Hook          | Purpose                                                |
+| ------------- | ------------------------------------------------------ |
+| `useState`    | Add **state** to functional components                 |
+| `useEffect`   | Run **side effects** (e.g., API calls, DOM updates)    |
+| `useRef`      | Create **mutable refs** to DOM elements or values      |
+| `useContext`  | Access **context values** without wrapper components   |
+| `useMemo`     | **Memoize** expensive calculations                     |
+| `useCallback` | Memoize functions to prevent unnecessary re-renders    |
+| `useReducer`  | Manage complex state logic (alternative to `useState`) |
+
+⚛️ 1. JSX (JavaScript XML)
+JSX is a syntax extension for JavaScript that lets you write HTML-like code inside JavaScript.
+✅ Example:
+    const element = <h1>Hello, world!</h1>;
+
+JSX is not valid JavaScript — browsers can't understand it.
+It makes writing UI declarative and readable.
+Under the hood, JSX is converted to plain JavaScript like:
+    React.createElement("h1", null, "Hello, world!");
+
+🛠️ 2. Babel
+    Babel is a JavaScript compiler (transpiler).
+✅ What it does:
+Converts modern JavaScript (ES6+) and JSX into browser-compatible JavaScript.
+Transforms:
+    const App = () => <h1>Hello</h1>;
+    into:
+    const App = () => React.createElement("h1", null, "Hello");
+
+✅ Why it’s important:
+Browsers don't understand JSX or some modern JS features — Babel makes it compatible.
+
+📦 3. Webpack
+    Webpack is a module bundler.
+✅ What it does:
+Takes all your files (JS, CSS, images, etc.), and bundles them into a single file (or few optimized chunks).
+Supports plugins and loaders to transform files during the bundling process (e.g., Babel-loader for JSX).
+🔁 Typical Workflow:
+Webpack loads your .js and .jsx files.
+
+Babel transpiles them.
+
+Webpack bundles everything into something like bundle.js.
+
+✅ Benefits:
+Code splitting.
+
+Asset optimization.
+
+Hot reloading (with tools like Webpack Dev Server).
+
+🧱 Summary Table:
+| Tool        | Purpose                        | Role in React App                          |
+| ----------- | ------------------------------ | ------------------------------------------ |
+| **JSX**     | HTML-like syntax in JavaScript | Used to describe UI in a readable way      |
+| **Babel**   | Transpiler for modern JS/JSX   | Converts JSX & ES6+ into browser JS        |
+| **Webpack** | Bundles your code and assets   | Creates optimized packages for the browser |
+
+
+🆚 Difference Between Class and Functional Components in React
+React allows you to build UI components in two main ways: using class components and functional components.
+
+🔹 1. Class Component
+A class-based component uses ES6 class syntax and must extend React.Component.
+
+✅ Example:
+import React, { Component } from 'react';
+
+class Welcome extends Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+✅ Key Features:
+Uses this.state and this.setState for state.
+Lifecycle methods like componentDidMount(), shouldComponentUpdate(), etc.
+More boilerplate.
+
+🔹 2. Functional Component
+A functional component is a plain JavaScript function that returns JSX. With React Hooks, they can now manage state and lifecycle as well.
+
+import React, { useState, useEffect } from 'react';
+
+function Welcome({ name }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log('Component mounted or updated');
+  }, [count]);
+
+  return <h1>Hello, {name}</h1>;
+}
+
+✅ Key Features:
+Cleaner and simpler syntax.
+Uses Hooks like useState, useEffect, etc.
+No this keyword needed.
+Encouraged in modern React development.
+
+🔹 How to Implement componentWillUnmount() in Functional Components
+In class components, componentWillUnmount() is a lifecycle method used to:
+
+Cleanup timers
+Unsubscribe from services or WebSockets
+Remove event listeners, etc.
+
+✅ In Functional Components, we use useEffect() with a cleanup function:
+🧠 Syntax:
+
+useEffect(() => {
+  // setup code here (runs on mount)
+
+  return () => {
+    // cleanup code here (runs on unmount)
+  };
+}, []);
+
+📦 Example 1: Cleanup a Timer
+import React, { useEffect } from 'react';
+
+function TimerComponent() {
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log('Running timer...');
+    }, 1000);
+
+    // Cleanup on unmount
+    return () => {
+      clearInterval(intervalId);
+      console.log('Timer cleared');
+    };
+  }, []);
+
+  return <div>Check the console</div>;
+}
+
+📦 Example 2: Cleanup Event Listener
+
+import React, { useEffect } from 'react';
+
+function ResizeListener() {
+  useEffect(() => {
+    const handleResize = () => {
+      console.log('Window resized');
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      console.log('Event listener removed');
+    };
+  }, []);
+
+  return <div>Resize the window and check console</div>;
+}
+
+🔹 What is a Portal in React?
+A React Portal lets you render a component outside its parent DOM hierarchy, while still maintaining full React functionality 
+(like context and events).
+
+📦 Real-world Example:
+You want to render a modal, tooltip, or dropdown, but placing it inside a deeply nested component might cause CSS z-index, overflow, or 
+positioning issues.
+Instead of rendering it inside the component tree, you render it at the root of the DOM using a portal.
+
+✅ Syntax:
+ReactDOM.createPortal(child, container)
+
+child: The React element to render
+container: The DOM node (e.g., document.getElementById('modal-root'))
+
+📋 Example:
+1. HTML structure (public/index.html)
+    <div id="root"></div>
+    <div id="modal-root"></div> <!-- Portal will render here -->
+
+2. Modal Component using Portal
+import ReactDOM from 'react-dom';
+
+function Modal({ children }) {
+  return ReactDOM.createPortal(
+    <div className="modal-backdrop">{children}</div>,
+    document.getElementById('modal-root')
+  );
+}
+
+3. Using the Modal
+function App() {
+  return (
+    <div>
+      <h1>Main App</h1>
+      <Modal>
+        <h2>This is inside a portal!</h2>
+      </Modal>
+    </div>
+  );
+}
+
+🔧 Why Use Portals?
+| Problem                                | Portals Help                          |
+| -------------------------------------- | ------------------------------------- |
+| CSS conflicts due to nesting           | Render elements outside DOM hierarchy |
+| `z-index` or `overflow: hidden` issues | Avoid parent constraints              |
+| Tooltips, dropdowns, modals            | Easy positioning and isolation        |
+
+✅ Summary:
+| Feature                   | React Portal                        |
+| ------------------------- | ----------------------------------- |
+| Purpose                   | Render component outside parent DOM |
+| API                       | `ReactDOM.createPortal()`           |
+| Common Uses               | Modals, Tooltips, Popovers          |
+| DOM Location              | Any element outside `#root`         |
+| Maintains React features? | ✅ Yes (context, events, etc.)      |
+
+
+🔁 What is Reconciliation in React?
+Reconciliation is the process React uses to update the DOM when your application's state or props change.
+
+🔍 What Actually Happens?
+When a component’s state or props change:
+
+React re-renders the component, creating a new Virtual DOM tree.
+
+React then compares the new Virtual DOM with the previous one (this process is called diffing).
+
+It calculates the minimum number of changes needed and updates only those parts in the real DOM.
+
+This is what we call Reconciliation.

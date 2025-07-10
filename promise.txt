@@ -1,0 +1,56 @@
+What is Promise: A Promise in JavaScript is an object that represents the eventual completion (or failure) of an asynchronous operation.
+Think of it as a placeholder for a value that will be available in the future.
+
+🔄 States of a Promise
+A promise has three states:
+
+Pending – The initial state; the promise is neither fulfilled nor rejected.
+
+Fulfilled – The operation completed successfully.
+
+Rejected – The operation failed.
+
+const promise = new Promise((resolve, reject) => {
+  // async task
+  if (success) resolve(data);
+  else reject(error);
+});
+
+let p = new Promise((resolve, reject) => {
+    let a = 1 + 1
+    if(a === 2){
+        resolve("Sucesss)
+    }else {
+        reject("Failed)
+    }
+})
+
+p.then((data) => {
+    console.log(data)
+}).catch((error) => console.log(error))
+
+🔗 Promise Chaining
+You can chain .then() to handle success, and .catch() for errors.
+fetch('https://api.example.com/user')
+  .then(response => response.json())       // parse the JSON
+  .then(data => console.log(data))         // handle the result
+  .catch(error => console.error(error));
+
+🧱 Promise.all()
+Waits for all promises to be fulfilled or rejects if any one fails.
+const p1 = Promise.resolve(1);
+const p2 = Promise.resolve(2);
+const p3 = Promise.resolve(3);
+
+Promise.all([p1, p2, p3])
+  .then(values => console.log(values)) // [1, 2, 3]
+  .catch(error => console.error(error));
+
+🏁 Promise.race()
+Returns the result of the first promise to settle (fulfilled or rejected);
+const p1 = new Promise(resolve => setTimeout(resolve, 500, 'A'));
+const p2 = new Promise(resolve => setTimeout(resolve, 100, 'B'));
+
+Promise.race([p1, p2])
+  .then(value => console.log(value)); // "B"
+

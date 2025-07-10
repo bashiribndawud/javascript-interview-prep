@@ -1,0 +1,76 @@
+✅ Error Handling in JavaScript (try/catch, custom error)
+In JavaScript, error handling allows you to manage unexpected situations (like failed API calls or invalid inputs)
+without crashing your program. The two main ways to handle errors are:
+
+1. try...catch Statement
+The try...catch block lets you "try" code that might throw an error and "catch" that error if it happens.
+
+🔸 Syntax:
+try {
+  // Code that might throw an error
+  let result = riskyFunction();
+  console.log(result);
+} catch (error) {
+  // This runs if an error occurs in the try block
+  console.error("An error occurred:", error.message);
+}
+
+🔸 Example:
+try {
+  let x = undefinedVariable; // ReferenceError
+} catch (err) {
+  console.log("Error caught:", err.message); // Output: Error caught: undefinedVariable is not defined
+}
+
+🔹 2. finally Block (Optional)
+finally is a block that always runs, whether an error was thrown or not.
+try {
+  // risky code
+} catch (err) {
+  // handle error
+} finally {
+  console.log("This always runs.");
+}
+
+
+🔹 3. Throwing Custom Errors
+You can throw your own errors using the throw keyword. This is useful for validating input or enforcing business logic.
+🔸 Example:
+function divide(a, b) {
+  if (b === 0) {
+    throw new Error("Cannot divide by zero");
+  }
+  return a / b;
+}
+
+try {
+  console.log(divide(10, 0));
+} catch (err) {
+  console.error(err.message); // Output: Cannot divide by zero
+}
+
+🔹 4. Custom Error Classes
+For more structured applications, especially in Node.js or large frontends, you can create custom error classes:
+
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
+
+function validateUsername(username) {
+  if (!username) {
+    throw new ValidationError("Username is required");
+  }
+}
+
+try {
+  validateUsername("");
+} catch (err) {
+  if (err instanceof ValidationError) {
+    console.log("Validation failed:", err.message);
+  } else {
+    throw err; // re-throw if it's not a known error type
+  }
+}

@@ -1,0 +1,324 @@
+✅ What is an Event in JavaScript?
+An event in JavaScript is an action or occurrence that happens in the browser and can be responded to with code.
+Events are how your JavaScript code interacts with the user or the browser.
+🧠 Common Examples of Events
+Event Type	        Trigger Example
+click	            When a user clicks a button
+submit	            When a form is submitted
+keydown         	When a key is pressed
+load	            When the page finishes loading
+mouseover       	When the mouse hovers over an item
+resize	            When the browser window is resized
+input	            When a user types in an input box
+
+📌 How Events Work
+JavaScript uses something called the Event Listener to listen for events.
+
+<button id="btn">Click Me</button>
+document.getElementById("btn").addEventListener("click", function () {
+  alert("Button was clicked!");
+});
+The function that runs when the event happens is called a callback or event handler.
+
+🔄 Event Object
+When an event occurs, the browser creates an event object and passes it to your function.
+It contains information like:
+
+The element that triggered the event
+
+The mouse coordinates
+
+The key that was pressed
+
+And more...
+
+document.addEventListener("click", function (event) {
+  console.log("You clicked at:", event.clientX, event.clientY);
+});
+
+✅ Summary
+Term	                Meaning
+Event	                Something that happens in the browser (user or system action)
+Event Listener	        JavaScript code that waits for an event to occur
+Event Handler	        Function that runs when the event happens
+Event Object	        Contains details about the event
+
+
+
+🔁 What is Event Bubbling and Event Capturing in JavaScript?
+In the DOM, when an event occurs on an element (like a click), it travels through three phases:
+
+📌 1. Capture Phase (a.k.a. Capturing)
+Event starts at the top (document) and travels down to the target element.
+
+📌 2. Target Phase
+The actual element that triggered the event (e.g., a clicked <button>).
+
+📌 3. Bubble Phase (a.k.a. Bubbling)
+Event moves back up from the target to the document root.
+
+🔄 Visualization:
+Capturing ↓
+document → body → div → button
+               ↑
+Bubbling   ←←←←←←←
+
+✅ How to Submit a Form with JavaScript
+📌 HTML:
+
+<form id="signup-form">
+  <input type="text" name="username" />
+  <button type="submit">Submit</button>
+</form>
+
+document.getElementById('signup-form').addEventListener('submit', function (e) {
+  e.preventDefault(); // 🚫 Prevent default form submission (page reload)
+
+  const username = this.username.value;
+
+  console.log("Form submitted with:", username);
+
+  // You can now send the data to a server or validate it here
+});
+
+
+Question: is js a case sensitive language 
+Yes, JavaScript is a case-sensitive language.
+✅ What does that mean?
+It means uppercase and lowercase letters are treated as different characters.
+
+🔧 Examples:
+let name = "John";
+let Name = "Doe";
+
+console.log(name); // "John"
+console.log(Name); // "Doe"
+name and Name are two completely different variables.
+
+📌 Applies To:
+Element	            Case-Sensitive?	             Example
+Variables	        ✅ Yes	                    userName ≠ UserName
+Function names	    ✅ Yes	                    getData() ≠ GetData()
+Object properties	✅ Yes	                    user.email ≠ user.Email
+Keywords	        ✅ Yes	                    function is valid, Function is not
+
+
+Question: tools and techniques to debug js code 
+Great! Debugging is a crucial skill in JavaScript development. Here are the most important tools and techniques you can use to debug 
+JavaScript code effectively:
+
+🛠️ Tools to Debug JavaScript
+1. Browser Developer Tools (DevTools)
+Every modern browser (Chrome, Firefox, Edge) has built-in DevTools.
+
+Key DevTools Features:
+Console Tab – view logs, errors, and use live JavaScript
+
+Sources Tab – inspect, set breakpoints, and step through code
+
+Network Tab – monitor API requests and responses
+
+Elements Tab – inspect and manipulate HTML/CSS
+
+Performance Tab – analyze rendering and speed issues
+
+2. console Methods
+Use console to print values, trace code flow, or catch bugs.
+console.log("value:", value);
+console.warn("This is a warning");
+console.error("Something went wrong");
+console.table([{ name: "Bashir" }, { name: "Jane" }]);
+
+3. Breakpoints & Step Execution
+In DevTools:
+
+Click on a line number in the Sources tab to set a breakpoint
+
+Use Step Over, Step Into, and Step Out to go through the code line by line
+
+4. Debugger Statement
+You can insert this directly in your code:
+function testDebug(x) {
+  debugger; // execution will pause here
+  return x * 2;
+}
+
+6. Try/Catch for Error Handling
+try {
+  riskyFunction();
+} catch (error) {
+  console.error("Caught an error:", error);
+}
+
+
+7. Network Debugging (API Issues)
+Use DevTools → Network Tab to:
+
+Check status codes (200, 404, 500)
+
+View request/response payloads
+
+See if data is being sent/received correctly
+
+8. Source Maps
+If you're using a bundler (e.g., Webpack, Vite), make sure source maps are enabled so DevTools can show the original source files, not minified/bundled code.
+
+
+9. Testing Tools
+Write unit tests to catch bugs early:
+
+Jest
+
+Mocha
+
+Vitest
+
+Cypress (for end-to-end testing)
+
+
+Question: difference between native, host and user object in js
+Great question! In JavaScript, objects can be grouped into three categories based on where they come from and how they're created:
+
+✅ 1. Native Objects
+➤ What are they?
+These are built-in objects provided by JavaScript itself, as part of the ECMAScript specification.
+🧠 Examples:
+Object
+
+Function
+
+Array
+
+String
+
+Number
+
+Boolean
+
+Math
+
+Date
+
+RegExp
+
+Error
+
+🧾 Example:
+let arr = [1, 2, 3];      // Array → native object
+let date = new Date();    // Date → native object
+
+
+✅ 2. Host Objects
+➤ What are they?
+These are objects provided by the environment in which JavaScript is running (e.g., browser or Node.js).
+They are not part of the JavaScript language, but made available by the platform.
+
+🧠 Examples (in browser):
+window
+
+document
+
+console
+
+alert
+
+setTimeout, setInterval
+
+XMLHttpRequest
+
+fetch
+
+🧠 Examples (in Node.js):
+global
+
+require
+
+process
+
+Buffer
+
+Example: 
+console.log("Hello");       // console → host object (browser)
+document.getElementById();  // document → host object
+
+✅ 3. User-defined Objects
+➤ What are they?
+These are objects created by you, the developer, using object literals, classes, or functions.
+
+🧾 Example:
+const person = {
+  name: "Bashir",
+  age: 30
+};
+
+class Car {
+  constructor(brand) {
+    this.brand = brand;
+  }
+}
+
+const myCar = new Car("Toyota");
+
+📋 Summary Table
+Type	                    Source	                                        Examples
+Native	                    Built into JavaScript (ES spec)	                Array, Date, Math, Error
+Host	                    Provided by the environment	                    window, document, fetch
+User-defined	            Created by the programmer	                    Your own objects and classes
+
+
+Question: What is same-origin policy (SOP)
+The Same-Origin Policy (SOP) is a fundamental security mechanism implemented by web browsers that restricts how a web page or script 
+loaded from one origin can interact with resources(pages or script) from another origin
+
+What is an Origin?
+An origin is defined by the combination of three components:
+
+Scheme (protocol): e.g., http or https
+
+Domain (host): e.g., example.com
+
+Port: e.g., 80, 443
+
+Two URLs must have the same scheme, domain, and port to be considered the same origin. For example:
+
+http://example.com:80/page1 and http://example.com:80/page2 are same-origin.
+
+But https://example.com, or http://sub.example.com, or http://example.com:8080 are different origins.
+
+What Does SOP Do?
+It prevents scripts or documents loaded from one origin from reading or interacting with resources from a different origin.
+
+This protects user data and prevents malicious websites from stealing sensitive information or performing unauthorized actions on 
+behalf of the user.
+
+For example, it stops a malicious site from reading your emails or bank details loaded in another tab or iframe.
+
+Why Is SOP Important?
+Data Isolation: Keeps cookies, local storage, and DOM data isolated between sites.
+
+Prevents Attacks: Helps mitigate cross-site scripting (XSS) and cross-site request forgery (CSRF) attacks.
+
+User Privacy: Ensures that sites cannot spy on or interfere with each other’s data.
+
+What Can SOP Restrict?
+Access to DOM elements, JavaScript objects, and certain browser APIs.
+
+Reading responses from cross-origin AJAX/fetch requests unless explicitly allowed.
+
+Exceptions and Relaxations
+Some resources like images, stylesheets, and scripts can be loaded cross-origin but have limited interaction.
+
+To allow controlled cross-origin access, mechanisms like Cross-Origin Resource Sharing (CORS) exist, where servers specify which origins 
+are permitted to access their resources.
+
+Summary
+Aspect	                    Description
+Definition	                Browser security policy restricting cross-origin interactions
+Origin Components	        Scheme + Domain + Port
+Purpose	                    Prevent unauthorized data access and protect user privacy
+Restricts	                Scripts reading/interacting with resources from other origins
+Exceptions	                Some resources allowed; CORS enables controlled access
+
+In essence, the Same-Origin Policy is a critical browser security feature that isolates web content by origin to protect users from 
+malicious cross-site attacks and data leaks.
+

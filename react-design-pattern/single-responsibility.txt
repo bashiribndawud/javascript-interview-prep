@@ -1,0 +1,210 @@
+✅ What is Single Responsibility in React?
+A React component should handle one specific task or concern.
+If a component is doing too many things (e.g. rendering UI, managing logic, fetching data), it's better to split it into smaller, 
+focused components.
+
+🎯 Why It Matters
+Improves readability
+
+Makes testing easier
+
+Encourages reuse
+
+Simplifies debugging
+
+Makes code more maintainable
+
+🛠 Example (Bad Practice — Violates SRP)
+function UserProfile() {
+  const [user, setUser] = React.useState(null);
+
+  // Fetching data inside component
+  React.useEffect(() => {
+    fetch('/api/user')
+      .then(res => res.json())
+      .then(data => setUser(data));
+  }, []);
+
+  return (
+    <div>
+      <h2>{user?.name}</h2>
+      <img src={user?.avatar} alt="avatar" />
+    </div>
+  );
+}
+
+❌ This component is doing too much:
+
+Fetching data
+
+Managing state
+
+Rendering UI
+
+✅ Refactored with Single Responsibility
+1. useUser Hook – handles data fetching
+
+function useUser() {
+  const [user, setUser] = React.useState(null);
+
+  React.useEffect(() => {
+    fetch('/api/user')
+      .then(res => res.json())
+      .then(data => setUser(data));
+  }, []);
+
+  return user;
+}
+
+2. UserAvatar Component – handles UI rendering
+function UserAvatar({ user }) {
+  if (!user) return <p>Loading...</p>;
+
+  return (
+    <div>
+      <h2>{user.name}</h2>
+      <img src={user.avatar} alt="avatar" />
+    </div>
+  );
+}
+
+3. UserProfile Component – combines logic
+function UserProfile() {
+  const user = useUser();
+  return <UserAvatar user={user} />;
+}
+
+✅ Now:
+useUser() handles data fetching
+
+UserAvatar handles UI display
+
+UserProfile handles composition
+
+By following the Single Responsibility Principle in React:
+
+Your code becomes cleaner
+
+Each part is easier to reuse or test
+
+It scales better in large apps
+
+2. ✅ Goal:
+Display a list of blog posts using well-separated components:
+src/
+  └── components/
+      ├── PostList.tsx
+      ├── PostCard.tsx
+      ├── PostContent.tsx
+      ├── PostImage.tsx
+  └── hooks/
+      └── usePosts.ts
+
+1️⃣ usePosts.ts – handles fetching logic (SRP: Data Fetching)
+import {useEffect, useState} = 'react'
+
+export interface Post {
+  id: number;
+  title: string;
+  body: string;
+  imageUrl: string;
+}
+
+export function usePost() {
+    const [posts, setPosts] = useState<Post[]>([])
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+    fetch('/api/posts')
+      .then(res => res.json())
+      .then(data => {
+        setPosts(data);
+        setLoading(false);
+      });
+  }, []);
+
+  return {posts, loading}
+}
+
+2️⃣ PostImage.tsx – handles image rendering only (SRP: Image UI)
+// components/PostImage.tsx
+import React from 'react';
+
+type Props = {
+  src: string;
+  alt: string;
+};
+
+export const PostImage: React.FC<Props> = ({ src, alt }) => (
+  <img src={src} alt={alt} style={{ width: '100%', borderRadius: '8px' }} />
+);
+
+3️⃣ PostContent.tsx – renders title and body (SRP: Content UI)
+
+// components/PostContent.tsx
+import React from 'react';
+
+type Props = {
+  title: string;
+  body: string;
+};
+
+export const PostContent: React.FC<Props> = ({ title, body }) => (
+  <div>
+    <h2>{title}</h2>
+    <p>{body}</p>
+  </div>
+);
+
+4️⃣ PostCard.tsx – combines image and content (SRP: UI Composition)
+// components/PostCard.tsx
+import React from 'react';
+import { PostImage } from './PostImage';
+import { PostContent } from './PostContent';
+import { Post } from '../hooks/usePosts';
+
+type Props = {
+  post: Post;
+};
+
+export const PostCard: React.FC<Props> = ({ post }) => (
+  <div style={{ border: '1px solid #ccc', padding: 16, marginBottom: 16 }}>
+    <PostImage src={post.imageUrl} alt={post.title} />
+    <PostContent title={post.title} body={post.body} />
+  </div>
+);
+
+5️⃣ PostList.tsx – fetches and displays the list (SRP: Page Logic)
+// components/PostList.tsx
+import React from 'react';
+import { usePosts } from '../hooks/usePosts';
+import { PostCard } from './PostCard';
+
+export const PostList: React.FC = () => {
+  const { posts, loading } = usePosts();
+
+  if (loading) return <p>Loading posts...</p>;
+
+  return (
+    <div>
+      {posts.map(post => (
+        <PostCard key={post.id} post={post} />
+      ))}
+    </div>
+  );
+};
+
+✅ What SRP Gives You Here:
+Each file/component does one job only.
+
+Easy to test PostImage, PostContent, and usePosts independently.
+
+Clean separation of data logic and UI.
+
+
+
+
+
+
+
+

@@ -1,0 +1,127 @@
+✅ 1. JavaScript Execution Context
+JavaScript is single-threaded, meaning it executes one line at a time using the call stack.
+
+🔷 Phases of Execution Context:
+Creation Phase: Memory is allocated for variables and functions.
+
+Execution Phase: Code is executed line by line.
+
+🔷 Call Stack: Manages execution of program
+It's a stack data structure that keeps track of function calls.
+
+Each time a function is invoked, it’s pushed onto the stack.
+
+When a function finishes, it’s popped off the stack.
+
+Example:
+function greet() {
+    console.log("Hello");
+}
+function start() {
+    greet();
+}
+Example 2:
+console.log("One")
+
+console.log("Two")
+
+function logThree(){
+  console.log("Three")
+}
+
+function logThreeAndFour() {
+  logThree();
+  console.log("Four")
+}
+
+logThreeAndFour()
+
+Result : 
+'One'
+'Two'
+'Three'
+'Four'
+start();
+// Call Stack: start() → greet() → console.log()
+
+In JavaScript, Web APIs provided by the browser (or Node.js) often come in two styles:
+
+Callback-based APIs: These accept a function as a parameter to be called once an operation completes.
+
+Promise-based APIs: These return a Promise that can be handled with .then() / .catch() or async/await.
+
+✅ Callback-Based Web API Examples
+| API                                                        | Description                                           |
+| ---------------------------------------------------------- | ----------------------------------------------------- |
+| `setTimeout(callback, delay)`                              | Calls the callback after a delay                      |
+| `setInterval(callback, delay)`                             | Repeatedly calls the callback after intervals         |
+| `XMLHttpRequest`                                           | Used for HTTP requests (older alternative to `fetch`) |
+| `navigator.geolocation.getCurrentPosition(success, error)` | Gets the user's location                              |
+| `fs.readFile(path, callback)` *(Node.js)*                  | Reads a file (asynchronously)                         |
+| `fs.writeFile(path, data, callback)` *(Node.js)*           | Writes data to a file                                 |
+
+✅ Promise-Based Web API Examples
+| API                                                      | Description                               |
+| -------------------------------------------------------- | ----------------------------------------- |
+| `fetch(url)`                                             | Makes HTTP requests and returns a Promise |
+| `navigator.clipboard.readText()`                         | Reads text from clipboard                 |
+| `navigator.clipboard.writeText(text)`                    | Writes text to clipboard                  |
+| `Notification.requestPermission()`                       | Asks user for notification permission     |
+| `FileReader.readAsText(file)` (with Promisified wrapper) | Often wrapped in a Promise                |
+| `fs.promises.readFile(path)` *(Node.js)*                 | Promise-based version of `fs.readFile`    |
+| `fs.promises.writeFile(path, data)` *(Node.js)*          | Promise-based version of `fs.writeFile`   |
+
+✅ 2. Web APIs (Browser Environment Only): Provides set of interfaces that allow us interact with sets of browsers features
+These web APIs allow us to offload long running task to the browser.
+Web APIs are provided by the browser (like setTimeout, DOM, fetch) and are not part of JS itself.
+a.Fetch APIs -> Promise base
+b.Timers APIs -> Callback
+c.Console APIs -> callback
+d.Geolocation APIs -> callback
+e.Web Storage APIs
+f.File APIs
+g.Performance APIs
+h.HTML DOM
+i.URL APIs
+How they work:
+
+Note: callback provided by some web apis(setTimeout, setInterval, geolocation etc) are push onto the task queue
+
+Example:Geolocation APIs
+    navigator.geolocation.getCurrentPosition(
+        position => console.log(position), //success callback
+        error => console.log(error) //error callback
+    ) 
+// this web api is offload immediately to the browser so it won't block program execution
+//when user click on allow in the browser the api return the data from the browser and uses the success callback to handle the result;
+//however it just just push the callback to the callstack because this could distrupt an already runing task causing unpredictable behaviour
+//Instead the callback is pushed to the task queue which is also called the callback queue.
+    Task Queue: Hold Web APIs callbacks and event handlers(click) to be executed at some later in the future.
+    Event Loop: It's the event loop responsibility to check if the callstack is empty, if empty get the first avaliable callback function in the task queue and pass
+                to the callstack for execution
+
+Example 2: setTimeout APIs
+    setTimeout(() => {
+        console.log('2000ms')
+    }, 2000) // the delay is untill it gets move to the task queue; because if the callstack is still runing program this could wait for many more seconds 
+    setTimeout(() => {
+        console.log('100ms')
+    }, 100)
+
+console.log("End of Program")
+
+Result: 
+'End of Program'
+'100ms'
+'2000ms'
+
+Example 3: Whenever we work with promise based web api we are working with the microtask queue;
+//Event loop prioritize the microtask queue to Task Queue(callback queue)
+//Event loop ensures the microtask queue is empty before executing the callbacks in the task queue;
+//After each task in the Task Queue it again check the microtask queue;
+
+
+
+Long-running tasks (e.g., timers, AJAX) are handled by Web APIs.
+
+Once completed, their callbacks are passed to the event queue.
