@@ -1,0 +1,139 @@
+✅ What is a Callback in JavaScript?
+A callback is a function that is passed as an argument to another function and is executed later, usually after some asynchronous operation.
+
+function fetchData(callback){
+    setTimeout(() => {
+        let data = "New Data"
+        callback(data)
+    },1000)
+}
+
+fetchData(function (data) {
+    console.log(data)
+})
+⚠️ The Problem with Callbacks
+When you have many asynchronous operations that depend on each other, you end up with nested callbacks. 
+This is known as "Callback Hell" or the "Pyramid of Doom".
+
+doTask1(function (result1) {
+  doTask2(result1, function (result2) {
+    doTask3(result2, function (result3) {
+      console.log("Final result:", result3);
+    });
+  });
+});
+
+Hard to read
+
+Hard to debug
+
+Difficult to handle errors consistently
+
+✅ What is a Promise (vs Callback)?
+A Promise is an object that represents the eventual completion or failure of an asynchronous task. 
+Promises were introduced to solve the problems of nested callbacks.
+
+doTask1()
+    .then(result1 => doTask2(result1))
+    .then(result2 => doTask3(result2))
+    .then(result3 => console.log("Final result", result3))
+    .catch(error => console.log(error))
+
+🔄 Converting Callback to Promise
+Here’s an example of how a callback-based function can be turned into a promise-based one:
+Callback Version:
+function getUser(callback) {
+  setTimeout(() => {
+    callback(null, { name: "John" });
+  }, 1000);
+}
+
+Promise Version:
+function getUser() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({ name: "John" });
+    }, 1000);
+  });
+}
+
+getUser().then(user => console.log(user));
+
+✅ Summary
+Callbacks work, but can get messy with nested flows.
+
+Promises make asynchronous code more readable, maintainable, and reliable.
+
+Promises allow chaining and centralized error handling.
+
+Promises didn’t eliminate callbacks, they just manage them better under the hood.
+
+✅ What is async/await?
+async/await is syntax sugar built on top of Promises.
+It lets you write asynchronous code in a clean, readable, and sequential way — without chaining .then().
+
+🔧 Basic Example
+function getData() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve("Data fetched");
+    }, 1000);
+  });
+}
+
+// Using async/await
+async function fetchData() {
+  const data = await getData(); // wait for the promise to resolve
+  console.log(data);
+}
+
+fetchData(); // Output after 1 second: Data fetched
+
+📌 How It Works
+async — declares an asynchronous function. It always returns a Promise.
+
+await — pauses the function until the Promise is resolved or rejected.
+
+✅ async/await vs Promises
+🧵 Using Promises (.then):
+getUser()
+  .then(user => getPosts(user.id))
+  .then(posts => console.log(posts))
+  .catch(error => console.error(error));
+
+  async function loadUserPosts() {
+  try {
+    const user = await getUser();
+    const posts = await getPosts(user.id);
+    console.log(posts);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+loadUserPosts();
+
+🧠 Things to Note
+You can only use await inside an async function.
+
+Use try...catch to handle errors — just like synchronous code.
+
+You can await multiple promises in parallel using Promise.all().
+
+⏱ Example: Parallel Async Calls
+
+async function loadData() {
+  try {
+    const [user, posts] = await Promise.all([getUser(), getPosts()]);
+    console.log(user, posts);
+  } catch (error) {
+    console.error("Failed:", error);
+  }
+}
+
+
+
+
+
+
+

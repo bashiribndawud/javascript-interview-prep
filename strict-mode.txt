@@ -1,0 +1,50 @@
+✅ What is Strict Mode in JavaScript?
+    Strict mode is a way to opt in to a restricted version of JavaScript.
+    It helps you write safer, cleaner, and more predictable code by catching errors early.
+    You enable strict mode by adding this line at the top of your JavaScript file or function:
+
+    "use strict";
+
+🧠 Why Do We Need Strict Mode?
+Strict mode helps in multiple ways:
+
+1. Prevents silent errors
+Without strict mode, JavaScript sometimes fails silently. Strict mode throws an error instead, making bugs easier to catch.
+
+2. Avoids using undeclared variables
+"use strict";
+
+x = 10; // ❌ Error: x is not defined
+
+3. Protects reserved keywords
+You can’t use future JS reserved words like let, package, or interface as variable names.
+
+"use strict";
+
+let let = 5; // ❌ Error
+
+5. Safer this binding
+In regular functions, this defaults to the global object (window). In strict mode, it's undefined if not set explicitly
+"use strict";
+
+function showThis() {
+  console.log(this); // undefined
+}
+showThis();
+
+
+✅ Where Can You Use Strict Mode?
+1. Whole script:
+"use strict";
+
+2. Specific function:
+function myFunction() {
+  "use strict";
+  // strict mode applies here only
+}
+
+
+📌 When Should You Use It?
+✅ Always!
+Modern JavaScript (like ES6 modules and class) is already in strict mode by default — but for scripts or functions, it's good practice to explicitly use it if needed.
+

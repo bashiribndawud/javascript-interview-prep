@@ -1,0 +1,41 @@
+🗑️ delete Operator
+The delete operator is used to remove a property from an object.
+
+🔧 Example:
+const user = {
+  name: "Bashir",
+  age: 25,
+};
+
+delete user.age;
+
+console.log(user); // { name: "Bashir" }
+
+❗ Notes:
+It only works on object properties (not variables or functions).
+
+Returns true if successful.
+
+You cannot delete variables declared with let, const, or var.
+
+🔍 typeof Operator
+✅ What it does:
+The typeof operator returns a string that tells you the type of a value.
+
+console.log(typeof "hello");    // "string"
+console.log(typeof 123);        // "number"
+console.log(typeof true);       // "boolean"
+console.log(typeof {});         // "object"
+console.log(typeof undefined);  // "undefined"
+console.log(typeof null);       // ❗ "object" (we'll explain below)
+
+❗ Quirk:
+typeof null === "object"; // true (this is a bug in JavaScript)
+
+❓ Difference Between null and undefined
+Feature	                    null	                            undefined
+Meaning	                    Intentional absence of value	    Variable declared but no value
+Set by	                    You (manually)	                    JavaScript (automatically)
+Type (typeof)	            "object" (weird bug)	            "undefined"
+Use case	                You want to clear/reset a value	    Default when no value is assigned
+
